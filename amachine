@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ~/aws.env
+
+docker-machine create --driver amazonec2 \
+	--amazonec2-ami ami-7caa341c \
+	--amazonec2-region us-west-2 \
+	--amazonec2-instance-type t2.small \
+	--amazonec2-ssh-user rancher \
+	--amazonec2-userdata cloud-config.yml \
+	 $@
