@@ -1,0 +1,11 @@
+#!/bin/bash
+
+docker-machine create --driver google \
+  --google-project rancher-dev \
+  --google-zone us-west1-a \
+  --google-machine-type g1-small \
+  --google-machine-image rancher-dev/global/images/rancheros-v101-serial \
+  $@
+
+# TODO: looks like this isn't the way to do it
+  #--google-tags serial-port-enable=1 \
