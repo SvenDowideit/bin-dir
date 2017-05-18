@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Uses https://github.com/jigtools/docker-machine-driver-qemu
+
+docker-machine create --driver qemu \
+	--qemu-ssh-user rancher \
+	--qemu-userdata cloud-config.yml \
+	--qemu-boot2docker-url rancheros.iso \
+	 $@
