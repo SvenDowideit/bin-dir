@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ~/aws.env
+
+docker-machine create -d digitalocean --digitalocean-image rancheros --digitalocean-ssh-user rancher --digitalocean-size 2gb $@
