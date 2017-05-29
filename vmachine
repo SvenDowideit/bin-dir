@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source ~/aws.env
+
+docker-machine create --driver vmwarevsphere \
+	--vmwarevsphere-vcenter 10.10.10.2 \
+	--vmwarevsphere-boot2docker-url rancheros.iso \
+	 $@

@@ -5,5 +5,5 @@
 docker-machine create --driver qemu \
 	--qemu-ssh-user rancher \
 	--qemu-userdata cloud-config.yml \
-	--qemu-boot2docker-url ~/rancheros.iso \
+	--qemu-boot2docker-url rancheros.iso \
 	 $@
