@@ -8,6 +8,11 @@ if blkid | grep RANCHER_STATE; then
 	exit
 fi
 
+INSTALL_DISK="/dev/vda"
+if ! fdisk -l $INSTALL_DISK; then
+	INSTALL_DISK="/dev/sda"
+fi
+
 (
 cat << EOF
 #cloud-init
@@ -40,14 +45,14 @@ EOF
 ) > cloud-init.yml
 
 sudo ros install -f \
-	-d /dev/vda \
+	-d $INSTALL_DISK \
 	--cloud-config cloud-init.yml \
 	--no-reboot \
 	--append "rancher.autologin=tty1" >> /var/log/install-test.log
 
 echo "Install done" >> /var/log/install-test.log
 
-sudo mount /dev/vda1 /mnt
+sudo mount $INSTALL_DISK /mnt
 mkdir -p /mnt/var/log/install/
 cp -r /var/log/* /mnt/var/log/install/
 

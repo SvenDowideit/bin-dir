@@ -1,10 +1,14 @@
 #!/bin/sh
 
+set -ex
+
 sudo  $(which pixiecore)  boot --cmdline "\
 rancher.password=rancher rancher.autologin=tty1 \
-rancher.services_include.open-vm-tools=true \
-rancher.services_include.zfs=true \
 rancher.bootstrap_docker.registry_mirror=${ENGINE_REGISTRY_MIRROR} \
 rancher.system_docker.registry_mirror=${ENGINE_REGISTRY_MIRROR} \
 rancher.docker.registry_mirror=${ENGINE_REGISTRY_MIRROR} \
+rancher.cloud_init.datasources=[url:https://raw.githubusercontent.com/SvenDowideit/bin-dir/master/cloud-configs/install-rancher-server.sh]
 " vmlinuz-* initrd-*
+
+#rancher.services_include.open-vm-tools=true \
+#rancher.services_include.zfs=true \
