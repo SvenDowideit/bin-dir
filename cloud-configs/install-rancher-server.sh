@@ -51,6 +51,8 @@ sudo ros install -f \
 
 echo "Install done"
 
+# mount the newly installed partition, so we can customise and then save the log
+sudo mount ${INSTALL_DISK}1 /mnt
 
 # This is where you'd can customise files that need to be ready when the installed RancherOS boots.
 mkdir -p /mnt/etc/docker/cni/bridge.d/
@@ -74,7 +76,6 @@ EOF
 echo "Rebooting"
 
 # save the log files
-sudo mount $INSTALL_DISK /mnt
 mkdir -p /mnt/var/log/install/
 cp -r /var/log/* /mnt/var/log/install/
 
