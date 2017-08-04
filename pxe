@@ -1,0 +1,10 @@
+#!/bin/sh
+
+sudo  $(which pixiecore)  boot --cmdline "\
+rancher.password=rancher rancher.autologin=tty1 \
+rancher.services_include.open-vm-tools=true \
+rancher.services_include.zfs=true \
+rancher.bootstrap_docker.registry_mirror=${ENGINE_REGISTRY_MIRROR} \
+rancher.system_docker.registry_mirror=${ENGINE_REGISTRY_MIRROR} \
+rancher.docker.registry_mirror=${ENGINE_REGISTRY_MIRROR} \
+" vmlinuz-* initrd-*
