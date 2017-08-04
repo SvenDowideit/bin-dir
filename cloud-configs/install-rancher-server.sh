@@ -1,6 +1,5 @@
-#!/bin/sh
-
-set -ex
+#!/bin/bash -ex
+exec &>> /var/log/install.log
 
 if blkid | grep RANCHER_STATE; then
 	# don't re-format
@@ -48,13 +47,10 @@ sudo ros install -f \
 	-d $INSTALL_DISK \
 	--cloud-config cloud-init.yml \
 	--no-reboot \
-	--append "rancher.autologin=tty1" >> /var/log/install-test.log
+	--append "rancher.autologin=tty1"
 
-echo "Install done" >> /var/log/install-test.log
+echo "Install done"
 
-sudo mount $INSTALL_DISK /mnt
-mkdir -p /mnt/var/log/install/
-cp -r /var/log/* /mnt/var/log/install/
 
 # This is where you'd can customise files that need to be ready when the installed RancherOS boots.
 mkdir -p /mnt/etc/docker/cni/bridge.d/
@@ -76,7 +72,11 @@ EOF
 ) > /mnt/etc/docker/cni/bridge.d/bridge.conf
 
 echo "Rebooting"
-echo "Rebooting" >> /mnt/var/log/install/install-test.log
+
+# save the log files
+sudo mount $INSTALL_DISK /mnt
+mkdir -p /mnt/var/log/install/
+cp -r /var/log/* /mnt/var/log/install/
 
 # reboot --kexec is a v1.1.0 feature that will boot straight into the just created disk, without rebooting the hardware
 # if you're using a pre-v1.1.0 version and have booted from cdrom/usb, you'll need to either eject the media, or have put the HD earlier in the boot order
