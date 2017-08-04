@@ -1,0 +1,11 @@
+#cloud-config
+rancher:
+  debug: true
+hostname: test-cloud
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDptcSecYUcBExglXGkl9NiRkTTcIxQ4AVnMYcfW560YGVUx6+QgDnj5DScrayi/FtiByleyDCkfoW8vk/iGvyNkFrjQ/WnGXnVQrEkPQyi7gvB/NAvJlZYFTmLsLcr/sc3ZN0SE+bubvE7pGIDBd+wI/u9q2ok/r5GhjbctHR8t8V0XRCzIxEOSwrYJ3O8xxYFP8UPvyitIz85+FKDpoljS/77sXH3lcoMtrzhgw4rWaE8FQb5caI08Nn15ibqrYoK30Gq2y2aPCbQmlhx0Z7z9FNkACXx0m54A0jurRsiOnyxVb2oSR5CU8cNawBKmJwl8Ygd5JdKpaoQnqeRw9mJ sven@Svens-Mac-mini.local
+rancher:
+  password: rancher2
+  repositories:
+    roast:
+      url: https://roastlink.github.io/
