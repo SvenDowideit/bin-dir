@@ -2,11 +2,28 @@
 
 source ~/aws.env
 
+# or t2.medium
+SIZE=t2.small
+
+REGION=us-west-1
+
+
+OSv101=
+OSv102=
+OSv103=ami-04351964
+OSv104rc=ami-9fa981ff
+#OSv110=ami-9e9eb0fe
+#OSv110ecs=ami-259eb045
+OSv110=ami-a90c25c9
+OSv110ecs=ami-530b2233
+
 docker-machine create --driver amazonec2 \
-	--amazonec2-ami ami-7caa341c \
-	--amazonec2-region us-west-2 \
-	--amazonec2-instance-type t2.medium \
+	--amazonec2-ami $OSv104rc \
+	--amazonec2-region $REGION \
+	--amazonec2-instance-type $SIZE \
 	--amazonec2-security-group all-open \
 	--amazonec2-ssh-user rancher \
-	--amazonec2-userdata cloud-config.yml \
 	 $@
+
+
+#	--amazonec2-userdata cloud-config.yml \

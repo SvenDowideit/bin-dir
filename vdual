@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ~/aws.env
+
+~/bin/machine -D create --driver vmwarevsphere \
+	--vmwarevsphere-vcenter 10.10.10.2 \
+	--vmwarevsphere-boot2docker-url rancheros.iso \
+	--vmwarevsphere-network "VM Network" \
+	--vmwarevsphere-network internal \
+	 $@

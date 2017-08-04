@@ -1,12 +1,22 @@
 #!/bin/bash
 
+echo "if you have an auth problem, run"
+echo "  gcloud auth application-default login"
+echo
+
+PROJECT=winged-math-749
+IMAGE=rancher-dev/global/images/rancheros-v101-serial
+IMAGE=winged-math-749/global/images/rancheros-v103
+#IMAGE=winged-math-749/global/images/rancheros-v110-rc2
+
 docker-machine -D create --driver google \
-  --google-project rancher-dev \
+  --google-project $PROJECT \
   --google-zone us-west1-a \
   --google-machine-type g1-small \
-  --google-machine-image rancher-dev/global/images/rancheros-v101-serial \
+  --google-machine-image $IMAGE \
   --google-username rancher \
   $@
+
 
 # TODO: looks like this isn't the way to do it
   #--google-tags serial-port-enable=1 \

@@ -1,5 +1,15 @@
 #!/bin/bash
 
+#is this the yoga260 with onelink+ dock?
+dockDP=$(xrandr | grep "DP-2-1 connected")
+echo "found: $dockDP"
+if [ "$dockDP" != "" ]; then
+	xrandr --output DP-2-1 --mode "3840x2160" --above eDP-1
+	exit
+fi
+
+exit
+# this is the yoga tablet using HDMI
 xrandr --newmode "3840x2160"  262.75  3840 3888 3920 4000  2160 2163 2168 2191 +hsync -vsync
 xrandr --addmode HDMI-1 3840x2160
 

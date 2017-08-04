@@ -2,7 +2,13 @@
 
 source ~/aws.env
 
-docker-machine create --driver vmwarevsphere \
+~/bin/machine -D create --driver vmwarevsphere \
+	--vmwarevsphere-network "VM Network" \
 	--vmwarevsphere-vcenter 10.10.10.2 \
 	--vmwarevsphere-boot2docker-url rancheros.iso \
+	--vmwarevsphere-cfgparam guestinfo.hostname=banana \
+	--vmwarevsphere-cfgparam guestinfo.rancher.ENVIRONMENT.SVEN=TEST \
 	 $@
+
+#	--vmwarevsphere-cloudinit https://raw.githubusercontent.com/RoastLink/roastlink.github.io/master/cloud-config.yml \
+#	--vmwarevsphere-cfgparam guestinfo.rancher.config.url=https://raw.githubusercontent.com/RoastLink/roastlink.github.io/master/cloud-config.yml \
