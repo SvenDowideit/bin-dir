@@ -1,0 +1,15 @@
+rancher-agent:
+  image: rancher/agent:v1.2.5
+  command: http://10.10.10.168:8080/v1/scripts/22A906891A04AA99E831:1483142400000:U7MMVCDKpoYa3ngehfX6BPBt92k
+  privileged: true
+  environment:
+  - CATTLE_HOST_LABELS='magic=node'
+  labels:
+    io.rancher.os.scope: user
+    io.rancher.os.after: docker
+  restart: unless-stopped
+  ports:
+    - 8080:8080
+  volumes:
+  - /var/run/docker.sock:/var/run/docker.sock 
+  - /var/lib/rancher:/var/lib/rancher 
