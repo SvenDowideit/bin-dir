@@ -4,7 +4,7 @@
 	--vmwarevsphere-username root \
 	--vmwarevsphere-password peterpan \
 	--vmwarevsphere-network "VM Network" \
-	--vmwarevsphere-vcenter 10.10.10.21 \
+	--vmwarevsphere-vcenter 192.168.33.128 \
 	--vmwarevsphere-boot2docker-url rancheros.iso \
 	--vmwarevsphere-cfgparam guestinfo.hostname=banana \
 	--vmwarevsphere-cfgparam guestinfo.rancher.ENVIRONMENT.SVEN=TEST \

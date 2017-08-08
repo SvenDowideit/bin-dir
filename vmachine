@@ -4,7 +4,7 @@ source ~/aws.env
 
 ~/bin/machine -D create --driver vmwarevsphere \
 	--vmwarevsphere-network "VM Network" \
-	--vmwarevsphere-vcenter 10.10.10.2 \
+	--vmwarevsphere-vcenter 192.168.33.141 \
 	--vmwarevsphere-boot2docker-url rancheros.iso \
 	--vmwarevsphere-cfgparam guestinfo.hostname=banana \
 	--vmwarevsphere-cfgparam guestinfo.rancher.ENVIRONMENT.SVEN=TEST \
