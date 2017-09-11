@@ -26,8 +26,8 @@ if [ ! -e hda.qcow2 ]; then
 	virt-copy-out -a hda.qcow2 /boot/vmlinuz-3.16.0-4-armmp-lpae /boot/initrd.img-3.16.0-4-armmp-lpae .
 else
 	qemu-system-arm -M virt -m 4096 \
-	  -kernel vmlinuz-3.16.0-4-armmp-lpae \
-	  -initrd initrd.img-3.16.0-4-armmp-lpae \
+	  -kernel vmlinuz-* \
+	  -initrd initrd.img-* \
 	  -append 'root=/dev/vda2' \
 	  -drive if=none,file=hda.qcow2,format=qcow,id=hd \
 	  -device virtio-blk-device,drive=hd \

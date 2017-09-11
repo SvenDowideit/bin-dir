@@ -12,13 +12,14 @@ OSv101=
 OSv102=
 OSv103=ami-04351964
 OSv104rc=ami-9fa981ff
+OSv104=ami-b3e1cad3
 #OSv110=ami-9e9eb0fe
 #OSv110ecs=ami-259eb045
-OSv110=ami-a90c25c9
-OSv110ecs=ami-530b2233
+OSv110=ami-b44470d4
+OSv110ecs=ami-075a6e67
 
 docker-machine create --driver amazonec2 \
-	--amazonec2-ami $OSv104rc \
+	--amazonec2-ami $OSv110 \
 	--amazonec2-region $REGION \
 	--amazonec2-instance-type $SIZE \
 	--amazonec2-security-group all-open \

@@ -2,13 +2,28 @@
 
 source ~/aws.env
 
+RANCHEROSISO="$(pwd)/rancheros.iso"
+if [ ! -f $RANCHEROSISO ]; then
+	RANCHEROSISO="$(pwd)/releases/latest/rancheros.iso"
+	if [ ! -f $RANCHEROSISO ]; then
+		RANCHEROSISO="http://releases.rancher.com/os/latest/rancheros.iso"
+	fi
+fi
+
+echo "Using $RANCHEROSISO to create machine"
+
 ~/bin/machine -D create --driver vmwarevsphere \
+	--vmwarevsphere-username root \
+	--vmwarevsphere-password peterpan \
 	--vmwarevsphere-network "VM Network" \
-	--vmwarevsphere-vcenter 192.168.33.141 \
-	--vmwarevsphere-boot2docker-url rancheros.iso \
-	--vmwarevsphere-cfgparam guestinfo.hostname=banana \
+	--vmwarevsphere-vcenter 10.10.10.41 \
+	--vmwarevsphere-boot2docker-url "$RANCHEROSISO" \
+	--vmwarevsphere-cfgparam guestinfo.hostname=rancher \
 	--vmwarevsphere-cfgparam guestinfo.rancher.ENVIRONMENT.SVEN=TEST \
 	 $@
 
 #	--vmwarevsphere-cloudinit https://raw.githubusercontent.com/RoastLink/roastlink.github.io/master/cloud-config.yml \
 #	--vmwarevsphere-cfgparam guestinfo.rancher.config.url=https://raw.githubusercontent.com/RoastLink/roastlink.github.io/master/cloud-config.yml \
+#	--vmwarevsphere-cpu-count "4" \
+#	--vmwarevsphere-memory-size "4096" \
+#	--vmwarevsphere-disk-size "40960" \

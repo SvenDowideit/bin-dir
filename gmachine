@@ -7,8 +7,8 @@ echo
 PROJECT=winged-math-749
 IMAGE=rancher-dev/global/images/rancheros-v101-serial
 IMAGE=winged-math-749/global/images/rancheros-v103
-IMAGE=winged-math-749/global/images/rancheros-v104-rc1
-#IMAGE=winged-math-749/global/images/rancheros-v110-rc2
+IMAGE=winged-math-749/global/images/rancheros-v104
+IMAGE=winged-math-749/global/images/rancheros-v110
 
 docker-machine -D create --driver google \
   --google-project $PROJECT \

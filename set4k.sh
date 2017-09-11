@@ -8,6 +8,9 @@ if [ "$dockDP" != "" ]; then
 	exit
 fi
 
+i3-msg move workspace to output up
+
+
 exit
 # this is the yoga tablet using HDMI
 xrandr --newmode "3840x2160"  262.75  3840 3888 3920 4000  2160 2163 2168 2191 +hsync -vsync
