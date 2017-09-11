@@ -1,0 +1,27 @@
+#cloud-config
+rancher:
+  docker:
+    registry_mirror: "http://10.10.10.23:5555"
+    insecure_registry:
+    - 10.10.10.23:5000
+    - arian:5000
+  system_docker:
+    registry_mirror: "http://10.10.10.23:5555"
+    insecure_registry:
+    - 10.10.10.23:5000
+    - arian:5000
+  services:
+    pihole:
+      image: diginc/pi-hole:debian
+      ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 80:80/tcp
+      cap_add:
+      - NET_ADMIN
+      environment:
+        ServerIP: 127.0.0.1
+      volumes:
+      - /opt/pihole:/etc/pihole
+      restart: always
+
