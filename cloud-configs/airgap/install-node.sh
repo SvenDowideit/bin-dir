@@ -17,34 +17,33 @@ cat << EOF
 #cloud-init
 rancher:
   services_include:
-    pihole: true
-    http-proxy: true
-    registry-mirror: true
   password: rancher
   network:
+    http_proxy: http://10.11.11.1:3128
+    #https_proxy: http://10.11.11.1:3128
+    no_proxy: localhost,127.0.0.1,10.11.11.1
     interfaces:
       # the airgapped private network
-      eth1:
+      # setting these here means they're not ready before the install - TODO: move them into vmware guestinfo
+      eth0:
         addresses:
-        - 10.11.11.1/24
-    #    gateway: 10.11.11.1
-    #dns:
-    #  nameservers:
-    #  - 11.11.11.1
+        - 10.11.11.100/24
+        gateway: 10.11.11.1
+    dns:
+      nameservers:
+      - 11.11.11.1
   repositories:
     roast:
-      url: https://roastlink.github.io/
+      url: http://roastlink.github.io/
   # note: these are sven's home registies
   docker:
-    registry_mirror: "http://10.10.10.23:5555"
+    registry_mirror: "http://10.11.11.1:5000"
     insecure_registry:
-    - 10.10.10.23:5000
-    - arian:5000
+    - 10.10.10.1:5000
   system_docker:
-    registry_mirror: "http://10.10.10.23:5555"
+    registry_mirror: "http://10.11.11.1:5000"
     insecure_registry:
     - 10.10.10.23:5000
-    - arian:5000
 ssh_authorized_keys:
 - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC4lT2u93xi+ghKV/zmkSDLqDzGOVb0iZnmh3H6+jJuAiEJwrQ7a33nL9CYVhvlE+dvszVqJT5Q2VHexiuzguqCeaoQvn9preuIc0vvSVlxUwBRtNjKGPO5SmcDgiPKLqeLNgkKWBWaseZR/GdrXlnUD8snnatBtSh2mx1cwVJr0XdyTAtnCS5eyONzpBFpHZ7/dzzeSqjG3SAXwj/x41WDJE4bBNXlGOCJ1RYk9Z5HYH/fGt5B6V34hy/EKe9Wl4yaDdlL+JTXHWGTEhPL/+yaUM6SZT92XFq/H562t8EIAL15KX8FtOv4Q/U9ByZP8xcSir/VIKoGIfMdeRtZobSDvM0caEMUp6lI+5ErmynVExVtroSPdjVdX3q7Onuqcp6JvBFVngAcviuCZDCXuFfF9ikB1axBTGTQlCAebCBPapyBF8z6RFDROHmm5CeV3RozsHEaRqNzPBoG5Tz9Z3mmDE/i2ihLpET67dpQVI8H3/r4puNwtttHh93BmPR9ZB80iLf4Oim/y1joI7UQwc+TJg6eMBZMUWeR8dVhIXFgohiEfvuSUfs7j67V9IzzIefaRGKEv1bBnTYaOlD/KbPXOxYazZAm00wx6DvEfiKxwCOanbN0z+TMyi5WxCum7pSCUZ9+M767aPzRBipQokpBJTLuq5Tn+XAOU49AIt0a3Q==
   SvenDowideit@home.org.au

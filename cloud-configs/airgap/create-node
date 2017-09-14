@@ -1,0 +1,23 @@
+#!/bin/bash
+
+RANCHEROSISO="$(pwd)/rancheros.iso"
+if [ ! -f $RANCHEROSISO ]; then
+	RANCHEROSISO="$(pwd)/releases/latest/rancheros.iso"
+	if [ ! -f $RANCHEROSISO ]; then
+		RANCHEROSISO="http://releases.rancher.com/os/latest/rancheros.iso"
+	fi
+fi
+echo "Using $RANCHEROSISO to create machine"
+
+docker-machine -D create --driver vmwarevsphere \
+	--vmwarevsphere-vcenter 10.10.10.41 \
+	--vmwarevsphere-username root \
+	--vmwarevsphere-password peterpan \
+	--vmwarevsphere-boot2docker-url $RANCHEROSISO \
+	--vmwarevsphere-network airgapped \
+	--vmwarevsphere-cfgparam guestinfo.hostname=node100 \
+	--vmwarevsphere-cpu-count "4" \
+	--vmwarevsphere-memory-size "4096" \
+	--vmwarevsphere-disk-size "40960" \
+	--vmwarevsphere-cloudinit install-node.sh \
+	 node100
