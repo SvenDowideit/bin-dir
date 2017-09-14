@@ -31,7 +31,7 @@ rancher:
         gateway: 10.11.11.1
     dns:
       nameservers:
-      - 11.11.11.1
+      - 10.11.11.1
   repositories:
     roast:
       url: http://roastlink.github.io/

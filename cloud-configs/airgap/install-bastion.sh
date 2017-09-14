@@ -21,6 +21,10 @@ rancher:
     http-proxy: true
     registry-mirror: true
   password: rancher
+  environment:
+    # for pihole
+    ServerIP: 10.11.11.1
+    WEBPASSWORD: rancher
   network:
     interfaces:
       # the airgapped private network
