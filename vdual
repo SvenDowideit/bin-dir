@@ -3,8 +3,8 @@
 source ~/aws.env
 
 ~/bin/machine -D create --driver vmwarevsphere \
-	--vmwarevsphere-vcenter 10.10.10.2 \
-	--vmwarevsphere-boot2docker-url rancheros.iso \
+	--vmwarevsphere-vcenter 10.10.10.41 \
+	--vmwarevsphere-boot2docker-url ~/releases/v1.1.0/rancheros.iso \
 	--vmwarevsphere-network "VM Network" \
-	--vmwarevsphere-network internal \
+	--vmwarevsphere-network airgapped \
 	 $@

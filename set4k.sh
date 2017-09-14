@@ -5,10 +5,10 @@ dockDP=$(xrandr | grep "DP-2-1 connected")
 echo "found: $dockDP"
 if [ "$dockDP" != "" ]; then
 	xrandr --output DP-2-1 --mode "3840x2160" --above eDP-1
+	i3-msg move workspace to output up
 	exit
 fi
 
-i3-msg move workspace to output up
 
 
 exit
