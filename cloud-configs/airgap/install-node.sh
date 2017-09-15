@@ -20,7 +20,7 @@ rancher:
   password: rancher
   network:
     http_proxy: http://10.11.11.1:3128
-    #https_proxy: http://10.11.11.1:3128
+    https_proxy: http://10.11.11.1:3128
     no_proxy: localhost,127.0.0.1,10.11.11.1
     #interfaces:
       # the airgapped private network
@@ -32,6 +32,11 @@ rancher:
     #dns:
     #  nameservers:
     #  - 10.11.11.1
+  # these are auto-set from the rancher.network. settings
+  #environment:
+  #  HTTP_PROXY: http://10.11.11.1:3128
+  #  HTTPS_PROXY: http://10.11.11.1:3128
+  #  NO_PROXY: localhost,127.0.0.1,10.11.11.1
   repositories:
     roast:
       url: http://roastlink.github.io/
