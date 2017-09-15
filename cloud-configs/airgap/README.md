@@ -20,6 +20,8 @@ Optionally runs:
 * local registry server
 * Reverse proxy - so external users can access apps running on the inner network
 * web server for config / services files
+* apt-cacher-ng
+* non-amd64?
 
 ## nodes on airgapped network
 

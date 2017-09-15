@@ -22,16 +22,16 @@ rancher:
     http_proxy: http://10.11.11.1:3128
     #https_proxy: http://10.11.11.1:3128
     no_proxy: localhost,127.0.0.1,10.11.11.1
-    interfaces:
+    #interfaces:
       # the airgapped private network
       # setting these here means they're not ready before the install - TODO: move them into vmware guestinfo
-      eth0:
-        addresses:
-        - 10.11.11.100/24
-        gateway: 10.11.11.1
-    dns:
-      nameservers:
-      - 10.11.11.1
+      #eth0:
+      #  addresses:
+      #  - 10.11.11.100/24
+      #  gateway: 10.11.11.1
+    #dns:
+    #  nameservers:
+    #  - 10.11.11.1
   repositories:
     roast:
       url: http://roastlink.github.io/

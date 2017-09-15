@@ -9,15 +9,36 @@ if [ ! -f $RANCHEROSISO ]; then
 fi
 echo "Using $RANCHEROSISO to create machine"
 
+# TODO: bug in docker-machine - it thinks an abs path is a URL and doesn't send it as data
+#       and the same with ~/bin/... paths
+#CLOUD_INIT_DIR=$(dirname $0)
+CLOUD_INIT_DIR=.
+
+NODE_ID=$1
+if [ "$NODE_ID" == "" ]; then
+	echo "Please add a new NodeID - ;"
+	echo "    this number will be used for the last part of the IP address (10.11.11.${NodeID}"
+	echo "    and for the machine name (node${NodeID})"
+	exit
+fi
+
+echo "Creating node${NODE_ID}"
+echo "----------------------------------"
+
 docker-machine -D create --driver vmwarevsphere \
 	--vmwarevsphere-vcenter 10.10.10.41 \
 	--vmwarevsphere-username root \
 	--vmwarevsphere-password peterpan \
 	--vmwarevsphere-boot2docker-url $RANCHEROSISO \
 	--vmwarevsphere-network airgapped \
-	--vmwarevsphere-cfgparam guestinfo.hostname=node100 \
+	--vmwarevsphere-cfgparam "guestinfo.hostname=node${NODE_ID}" \
+	--vmwarevsphere-cfgparam "guestinfo.interface.0.name=eth0" \
+	--vmwarevsphere-cfgparam "guestinfo.interface.0.ip.0.address=10.11.11.${NODE_ID}/24" \
+	--vmwarevsphere-cfgparam "guestinfo.interface.0.route.0.gateway=10.11.11.1" \
+	--vmwarevsphere-cfgparam "guestinfo.dns.server.0=10.11.11.1" \
 	--vmwarevsphere-cpu-count "4" \
 	--vmwarevsphere-memory-size "4096" \
 	--vmwarevsphere-disk-size "40960" \
-	--vmwarevsphere-cloudinit install-node.sh \
-	 node100
+	--vmwarevsphere-cloudinit ${CLOUD_INIT_DIR}/install-node.sh \
+	 node${NODE_ID}
+
