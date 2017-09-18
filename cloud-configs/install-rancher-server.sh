@@ -1,4 +1,19 @@
 #!/bin/bash -ex
+
+# TODO: detect if this is being called as the cloud-init on a new server, or
+# on an existing machine, where its intended to call docker-machine to kick off
+# a new installed machine..
+# for now, use my bin-dir script to work it out
+if which vmachine; then
+	vmachine \
+	--vmwarevsphere-cpu-count "4" \
+	--vmwarevsphere-memory-size "4096" \
+	--vmwarevsphere-cloudinit $0 \
+		rancher-server
+	exit
+fi
+
+
 exec &>> /var/log/install.log
 
 if blkid | grep RANCHER_STATE; then
@@ -43,6 +58,15 @@ ssh_authorized_keys:
 EOF
 ) > cloud-init.yml
 
+# don't start the install until docker-machine has finished doing its stuff
+#echo "Waiting for Docker-machine to open user-docker socket connection" >> /dev/kmsg
+#while [[ -z "$(netstat -nat | egrep ":2376( |$'\t')")" ]];do
+#	echo "Waiting for Docker-machine to open user-docker socket connection"
+#	sleep 5
+#done
+
+echo "Starting RancherOS install"
+echo "Starting RancherOS install" >> /dev/kmsg
 sudo ros install -f \
 	-d $INSTALL_DISK \
 	--cloud-config cloud-init.yml \
@@ -53,6 +77,13 @@ echo "Install done"
 
 # mount the newly installed partition, so we can customise and then save the log
 sudo mount ${INSTALL_DISK}1 /mnt
+
+# copy the machine ssh keys
+mkdir -p /mnt/home
+cp -r /home /mnt/home
+
+# copy the user docker certs made by machine
+cp -a /var/lib/rancher /mnt/var/lib/
 
 # This is where you'd can customise files that need to be ready when the installed RancherOS boots.
 mkdir -p /mnt/etc/docker/cni/bridge.d/
@@ -72,6 +103,7 @@ cat <<EOF
 }
 EOF
 ) > /mnt/etc/docker/cni/bridge.d/bridge.conf
+
 
 echo "Rebooting"
 

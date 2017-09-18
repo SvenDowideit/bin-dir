@@ -4,7 +4,7 @@ source ~/aws.env
 
 RANCHEROSISO="$(pwd)/rancheros.iso"
 if [ ! -f $RANCHEROSISO ]; then
-	RANCHEROSISO="$(pwd)/releases/latest/rancheros.iso"
+	RANCHEROSISO=$(echo ~/releases/latest/rancheros.iso)
 	if [ ! -f $RANCHEROSISO ]; then
 		RANCHEROSISO="http://releases.rancher.com/os/latest/rancheros.iso"
 	fi
