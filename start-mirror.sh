@@ -9,3 +9,4 @@ docker run -d --name mirror --restart always -v /var/lib/registry-mirror:/regist
 docker exec mirror sh -c "echo 'proxy:' >> /etc/docker/registry/config.yml"
 docker exec mirror sh -c "echo '  remoteurl: https://registry-1.docker.io' >> /etc/docker/registry/config.yml"
 docker restart mirror
+docker run -d -p 80:80 --name nginx --restart always -v /home/sven/www:/usr/share/nginx/html:ro nginx
