@@ -25,6 +25,7 @@ if ! which docker ; then
 	sudo ./docker.install.sh
 fi
 sudo adduser $(whoami) docker
+sudo adduser debian docker || true
 
 sudo apt-get update
 sudo apt-get upgrade -yq
