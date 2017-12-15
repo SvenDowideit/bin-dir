@@ -1,13 +1,20 @@
 #!/bin/bash -ex
 
-# Nectar Openstack cloud
+# This script assumes you havelogged into the nectar dashboard,
+# set your openstack API password in https://dashboard.rc.nectar.org.au/settings/reset-password/
+# then downloaded the Openstack RC file from https://dashboard.rc.nectar.org.au/project/access_and_security/
+
+# Nectar Openstack cloud RC file
 source ~/pt-33702-openrc.sh
 
 docker-machine create  -d openstack \
+	--engine-storage-driver overlay2 \
 	--openstack-auth-url ${OS_AUTH_URL} \
 	--openstack-flavor-name m1.small \
 	--openstack-image-name "NeCTAR Debian 9 (Stretch) amd64" \
 	--openstack-domain-name "${OS_USER_DOMAIN_NAME}" \
 	--openstack-username "${OS_USERNAME}" \
 	--openstack-password "${OS_PASSWORD}" \
-	--openstack-tenant-name "${OS_PROJECT_NAME}" $@
+	--openstack-tenant-name "${OS_PROJECT_NAME}" \
+	--openstack-ssh-user debian \
+	$@
