@@ -1,0 +1,12 @@
+#!/bin/bash -ex
+
+# Nectar Openstack cloud
+source ~/pt-33702-openrc.sh
+
+docker-machine create  -d openstack \
+	--openstack-auth-url ${OS_AUTH_URL} \
+	--openstack-flavor-name m1.small \
+	--openstack-image-name "NeCTAR Debian 9 (Stretch) amd64" \
+	--openstack-username ${OS_USERNAME} \
+	--openstack-password "${OS_PASSWORD}" \
+	--openstack-tenant-name ${OS_PROJECT_NAME} $@

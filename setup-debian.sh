@@ -24,6 +24,7 @@ if [ ! -e "/usr/local/bin/docker-compose" ]; then
 	echo "export PATH=/usr/local/bin:$PATH" >> .bashrc
 fi
 
+# curl -s https://api.github.com/repos/boxbilling/boxbilling/releases/latest | grep browser_download_url | cut -d '"' -f 4
 
 if [ ! -e "/usr/local/bin/docker-machine" ]; then
 	sudo curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` -o /usr/local/bin/docker-machine 
