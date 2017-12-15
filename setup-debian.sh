@@ -25,3 +25,7 @@ if [ ! -e "/usr/local/bin/docker-compose" ]; then
 fi
 
 
+if [ ! -e "/usr/local/bin/docker-machine" ]; then
+	sudo curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` -o /usr/local/bin/docker-machine 
+	sudo chmod +x /usr/local/bin/docker-machine
+fi
