@@ -37,3 +37,10 @@ if [ ! -e "bin" ]; then
 	echo "export PATH=$HOME/bin:$PATH" >> .bashrc
 fi
 
+# see if there's swap, if not set some up...
+if [ ! -e "/swap" ]; then
+	sudo dd if=/dev/zero of=/swap bs=1024 count=4096000
+	sudo mkswap /swap
+	sudo swapon /swap
+	sudo sh -s 'echo "/swap swap swap defaults 0 0" >> /etc/fstab'
+fi
