@@ -5,16 +5,24 @@
 # then downloaded the Openstack RC file from https://dashboard.rc.nectar.org.au/project/access_and_security/
 
 # Nectar Openstack cloud RC file
-source ~/pt-33702-openrc.sh
+source ~/CSIRO-TERN-openrc.sh
+#flavour="m1.small"  # 4GB RAM
+#flavour="m1.medium" # 8GB RAM
+#flavour="m1.large" # 16GB RAM
+flavour="m1.xlarge" # 32GB RAM
+#flavour="m1.xxlarge" # 64GB RAM
 
 docker-machine create  -d openstack \
 	--engine-storage-driver overlay2 \
 	--openstack-auth-url ${OS_AUTH_URL} \
-	--openstack-flavor-name m1.small \
+	--openstack-flavor-name ${flavour} \
 	--openstack-image-name "NeCTAR Debian 9 (Stretch) amd64" \
 	--openstack-domain-name "${OS_USER_DOMAIN_NAME}" \
 	--openstack-username "${OS_USERNAME}" \
 	--openstack-password "${OS_PASSWORD}" \
 	--openstack-tenant-name "${OS_PROJECT_NAME}" \
 	--openstack-ssh-user debian \
+	--openstack-keypair-name "putty sven" \
+	--openstack-private-key-file ~/.ssh/id_rsa \
+	--openstack-user-data-file ~/bin/setup-debian.sh \
 	$@

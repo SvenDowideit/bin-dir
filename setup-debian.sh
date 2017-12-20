@@ -44,3 +44,6 @@ if [ ! -e "/swap" ]; then
 	sudo swapon /swap
 	sudo sh -s 'echo "/swap swap swap defaults 0 0" >> /etc/fstab'
 fi
+
+# TODO: setup dailup apt- update
+# TODO: turn on firewall
