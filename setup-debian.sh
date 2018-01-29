@@ -4,6 +4,10 @@ cd $HOME
 # and lets log the output
 exec &>> install.log
 
+sudo apt-get update
+sudo apt-get upgrade -yq
+sudo apt-get install -yq vim git make build-essential curl
+
 if [ ! -e "/usr/local/bin/docker-compose" ]; then
 
 	sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
@@ -26,10 +30,6 @@ if ! which docker ; then
 fi
 sudo adduser $(whoami) docker
 sudo adduser debian docker || true
-
-sudo apt-get update
-sudo apt-get upgrade -yq
-sudo apt-get install -yq vim git make build-essential
 
 if [ ! -e "bin" ]; then
 	git clone https://github.com/SvenDowideit/bin-dir
