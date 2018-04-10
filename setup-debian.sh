@@ -31,6 +31,10 @@ fi
 sudo adduser $(whoami) docker
 sudo adduser debian docker || true
 
+sudo apt-get update
+sudo apt-get upgrade -yq
+sudo apt-get install -yq vim git make build-essential
+
 if [ ! -e "bin" ]; then
 	git clone https://github.com/SvenDowideit/bin-dir
 	mv bin-dir bin
@@ -38,12 +42,9 @@ if [ ! -e "bin" ]; then
 fi
 
 # see if there's swap, if not set some up...
-if [ ! -e "/swap" ]; then
-	sudo dd if=/dev/zero of=/swap bs=1024 count=4096000
-	sudo mkswap /swap
-	sudo swapon /swap
-	sudo sh -s 'echo "/swap swap swap defaults 0 0" >> /etc/fstab'
-fi
-
-# TODO: setup dailup apt- update
-# TODO: turn on firewall
+#if [ ! -e "/swap" ]; then
+#	sudo dd if=/dev/zero of=/swap bs=1024 count=4096000
+#	sudo mkswap /swap
+#	sudo swapon /swap
+#	sudo sh -s 'echo "/swap swap swap defaults 0 0" >> /etc/fstab'
+#fi
