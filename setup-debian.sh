@@ -31,6 +31,14 @@ fi
 sudo adduser $(whoami) docker
 sudo adduser debian docker || true
 
+if ! -e "~/.docker/cli-plugins/docker-buildx"; then
+	BUILDX_VERSION=$(curl https://github.com/docker/buildx/releases/latest | sed 's/.*tag\///' | sed 's/".*//')
+	curl -L https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64 \
+	-o ~/.docker/cli-plugins/docker-buildx
+	chmod a+x ~/.docker/cli-plugins/docker-buildx
+	docker buildx install
+fi
+
 sudo apt-get update
 sudo apt-get upgrade -yq
 sudo apt-get install -yq vim git make build-essential
