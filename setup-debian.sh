@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -ex
 cd $HOME
 # and lets log the output
@@ -35,10 +35,25 @@ sudo apt-get update
 sudo apt-get upgrade -yq
 sudo apt-get install -yq vim git make build-essential
 
-if [ ! -e "bin" ]; then
+if [ ! -e bin ]; then
 	git clone https://github.com/SvenDowideit/bin-dir
 	mv bin-dir bin
 	echo "export PATH=$HOME/bin:$PATH" >> .bashrc
+fi
+
+# add vscode
+if ! which code ; then
+	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+	sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+	sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+	sudo apt-get install apt-transport-https
+	sudo apt-get update
+	sudo apt-get install code # or code-insiders
+fi
+
+if [[ "$(git config --global user.email)" == "" ]]; then
+  git config --global user.email "SvenDowideit@home.org.au"
+  git config --global user.name "Sven Dowideit"
 fi
 
 # see if there's swap, if not set some up...
