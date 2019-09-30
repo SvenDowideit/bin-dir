@@ -2,6 +2,8 @@
 set -ex
 cd $HOME
 # and lets log the output
+
+echo "See the output of this script in ${HOME}/install.log"
 exec &>> install.log
 
 sudo apt-get update
@@ -32,6 +34,7 @@ sudo adduser $(whoami) docker
 sudo adduser debian docker || true
 
 if ! -e "~/.docker/cli-plugins/docker-buildx"; then
+	mkdir -p ~/.docker/cli-plugins/
 	BUILDX_VERSION=$(curl https://github.com/docker/buildx/releases/latest | sed 's/.*tag\///' | sed 's/".*//')
 	curl -L https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64 \
 	-o ~/.docker/cli-plugins/docker-buildx
