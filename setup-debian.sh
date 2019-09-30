@@ -66,6 +66,7 @@ if [[ "$(git config --global user.email)" == "" ]]; then
   git config --global user.email "SvenDowideit@home.org.au"
   git config --global user.name "Sven Dowideit"
 fi
+git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 
 # see if there's swap, if not set some up...
 #if [ ! -e "/swap" ]; then
