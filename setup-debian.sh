@@ -33,7 +33,7 @@ fi
 sudo adduser $(whoami) docker
 sudo adduser debian docker || true
 
-if ! -e "~/.docker/cli-plugins/docker-buildx"; then
+if [ ! -e "~/.docker/cli-plugins/docker-buildx" ]; then
 	mkdir -p ~/.docker/cli-plugins/
 	BUILDX_VERSION=$(curl https://github.com/docker/buildx/releases/latest | sed 's/.*tag\///' | sed 's/".*//')
 	curl -L https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64 \
