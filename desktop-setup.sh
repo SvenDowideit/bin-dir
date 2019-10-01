@@ -11,6 +11,9 @@ sudo apt-get upgrade -yq
 sudo apt-get install -yq vim git make build-essential curl \
 					i3 meld
 
+# lets start trying snaps!
+sudo snap install --classic go
+
 ADDPATH="export PATH=/usr/local/bin:\$PATH"
 if  ! grep "^$ADDPATH$" ~/.bashrc ; then
 	echo "$ADDPATH" >> .bashrc
