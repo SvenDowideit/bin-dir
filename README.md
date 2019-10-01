@@ -10,3 +10,4 @@ wget -q -O - https://raw.githubusercontent.com/SvenDowideit/bin-dir/master/deskt
 ```
 
 This should be idemoptent - and should allow things to be auto-upgraded...
+

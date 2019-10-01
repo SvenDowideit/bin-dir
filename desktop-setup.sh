@@ -8,20 +8,28 @@ exec &>> install.log
 
 sudo apt-get update
 sudo apt-get upgrade -yq
-sudo apt-get install -yq vim git make build-essential curl
+sudo apt-get install -yq vim git make build-essential curl \
+					i3
 
-if [ ! -e "/usr/local/bin/docker-compose" ]; then
-
-	sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-	sudo chmod 755 /usr/local/bin/docker-compose
-	echo "export PATH=/usr/local/bin:$PATH" >> .bashrc
+ADDPATH="export PATH=/usr/local/bin:\$PATH"
+if  ! grep "^$ADDPATH$" ~/.bashrc ; then
+	echo "$ADDPATH" >> .bashrc
 fi
 
-# curl -s https://api.github.com/repos/boxbilling/boxbilling/releases/latest | grep browser_download_url | cut -d '"' -f 4
-if [ ! -e "/usr/local/bin/docker-machine" ]; then
-	sudo curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`uname -s`-`uname -m` -o /usr/local/bin/docker-machine 
-	sudo chmod +x /usr/local/bin/docker-machine
-fi
+function github_install() {
+	local repo="$1"			#for example, docker/machine
+	local destination="$2"	#for example /usr/local/bin/docker-machine
+
+	local url=$(curl -s https://api.github.com/repos/${repo}/releases/latest | grep browser_download_url  | cut -d '"' -f 4 | grep $(uname -s)-$(uname -m) | head -n 1)
+	local version=$(echo "${url}" | sed 's|.*/releases/download/||' | sed 's|/.*||')
+	if [[ ! -e "${destination}" || ! "$(${destination} version)" =~ ${version/v/} ]]; then
+		sudo curl -L "${url}" -o "${destination}" 
+		sudo chmod +x "${destination}"
+	fi
+}
+
+github_install docker/machine /usr/local/bin/docker-machine
+github_install docker/compose /usr/local/bin/docker-compose
 
 # TODO: work out how to wait for the apt/dpkg lock
 # this bit is redundant if we're creating with docker-machine, but that's not always the case.
@@ -33,25 +41,18 @@ fi
 sudo adduser $(whoami) docker
 sudo adduser debian docker || true
 
-if [ ! -e "~/.docker/cli-plugins/docker-buildx" ]; then
-	mkdir -p ~/.docker/cli-plugins/
-	BUILDX_VERSION=$(curl https://github.com/docker/buildx/releases/latest | sed 's/.*tag\///' | sed 's/".*//')
-	curl -L https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64 \
-	-o ~/.docker/cli-plugins/docker-buildx
-	chmod a+x ~/.docker/cli-plugins/docker-buildx
-	docker buildx install
-fi
-
-sudo apt-get update
-sudo apt-get upgrade -yq
-sudo apt-get install -yq vim git make build-essential
+mkdir -p ~/.docker/cli-plugins/
+github_install docker/buildx ~/.docker/cli-plugins/docker-buildx
+docker buildx install
 
 if [ ! -e bin ]; then
 	git clone https://github.com/SvenDowideit/bin-dir
 	mv bin-dir bin
-	echo "export PATH=$HOME/bin:$PATH" >> .bashrc
 fi
-
+ADDPATH="export PATH=$HOME/bin:\$PATH"
+if  ! grep "^$ADDPATH$" ~/.bashrc ; then
+	echo "$ADDPATH" >> .bashrc
+fi
 # add vscode
 if ! which code ; then
 	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
