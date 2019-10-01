@@ -72,6 +72,12 @@ if [[ "$(git config --global user.email)" == "" ]]; then
 fi
 git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 
+# I should use python 3 by default...
+ADD="alias python=python3"
+if  ! grep "^$ADD$" ~/.bashrc ; then
+	echo "$ADD" >> .bashrc
+fi
+
 # see if there's swap, if not set some up...
 #if [ ! -e "/swap" ]; then
 #	sudo dd if=/dev/zero of=/swap bs=1024 count=4096000
