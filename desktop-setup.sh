@@ -9,7 +9,7 @@ exec &>> install.log
 sudo apt-get update
 sudo apt-get upgrade -yq
 sudo apt-get install -yq vim git make build-essential curl \
-					i3
+					i3 meld
 
 ADDPATH="export PATH=/usr/local/bin:\$PATH"
 if  ! grep "^$ADDPATH$" ~/.bashrc ; then
