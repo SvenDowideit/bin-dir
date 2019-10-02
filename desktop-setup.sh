@@ -14,10 +14,14 @@ sudo apt-get install -yq vim git make build-essential curl \
 # lets start trying snaps!
 sudo snap install --classic go
 
-ADDPATH="export PATH=/usr/local/bin:\$PATH"
-if  ! grep "^$ADDPATH$" ~/.bashrc ; then
-	echo "$ADDPATH" >> .bashrc
-fi
+function add_to_bashrc() {
+	local line="$1"
+	if  ! grep "^${line}$" ~/.bashrc ; then
+		echo "${line}" >> .bashrc
+	fi
+}
+
+add_to_bashrc "export PATH=/usr/local/bin:\$PATH"
 
 function github_install() {
 	local repo="$1"			#for example, docker/machine
@@ -52,10 +56,8 @@ if [ ! -e bin ]; then
 	git clone https://github.com/SvenDowideit/bin-dir
 	mv bin-dir bin
 fi
-ADDPATH="export PATH=$HOME/bin:\$PATH"
-if  ! grep "^$ADDPATH$" ~/.bashrc ; then
-	echo "$ADDPATH" >> .bashrc
-fi
+add_to_bashrc "export PATH=$HOME/bin:\$PATH"
+
 # add vscode
 if ! which code ; then
 	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
@@ -73,10 +75,14 @@ fi
 git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 
 # I should use python 3 by default...
-ADD="alias python=python3"
-if  ! grep "^$ADD$" ~/.bashrc ; then
-	echo "$ADD" >> .bashrc
-fi
+add_to_bashrc "alias python=python3"
+sudo apt-get install -yq python3-pip
+
+# yes, I prefer vim
+add_to_bashrc "export EDITOR=vim"
+
+# work database
+sudo apt-get install -yq postgresql-client-10
 
 # see if there's swap, if not set some up...
 #if [ ! -e "/swap" ]; then
